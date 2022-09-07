@@ -24,7 +24,7 @@ router.post("/", (req, res) => {
         res.status(400).send("Error in request - phone number is invalid.");
         return;
     }
-    
+    // create new warehouse object
     const newWarehouse =   {
         "id": uuidv4(),
         name,
