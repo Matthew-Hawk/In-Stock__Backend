@@ -5,7 +5,7 @@ const express = require("express");
 const app = express()
 const cors = require("cors");   
 require('dotenv').config()
-const {PORT} = process.env
+const {PORT} = process.env || 8080;
 //Import routes
 const warehouseRoutes = require('./routes/warehouses');
 
