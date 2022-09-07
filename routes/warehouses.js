@@ -44,7 +44,7 @@ router.post("/", (req, res) => {
     // write the updated warehouse data back to the json file
     fs.writeFileSync("./data/warehouses.json", JSON.stringify(warehouseData));
     // send back the newly added warehouse
-    res.json(newWarehouse);
+    res.status(200).json(newWarehouse);
 });
 
 module.exports = router;
