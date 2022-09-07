@@ -1,4 +1,4 @@
-// libraries
+// imports
 const express = require('express');
 const router = express.Router();
 const fs = require('fs');
@@ -30,4 +30,4 @@ router.post("/", (req, res) => {
     res.json(newWarehouse);
 });
 
-exports.modules = router;
+module.exports = router;

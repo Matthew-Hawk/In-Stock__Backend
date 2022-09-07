@@ -6,7 +6,7 @@ const app = express()
 const cors = require("cors");   
 require('dotenv').config()
 const {PORT} = process.env
-//Importr routes
+//Import routes
 const warehouseRoutes = require('./routes/warehouses');
 
 //Middleware
