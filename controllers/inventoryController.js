@@ -29,8 +29,9 @@ const addInventoryItem = (req, res) => {
     inventoryData.push(newInventory);
     // write the updated inventory data back to the json file
     fs.writeFileSync("./data/inventories.json", JSON.stringify(inventoryData));
-    // send back the newly added inventory
-    res.status(201).json(newInventory);
+    // send back the new inventory location
+    const newInventoryURL = `/inventory/${newInventory[0]}`;
+    res.status(201).location(newInventoryURL).send(newInventoryURL);
 };
 
 module.exports = {

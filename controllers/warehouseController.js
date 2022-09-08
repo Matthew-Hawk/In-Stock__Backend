@@ -19,7 +19,7 @@ const addWarehouse = (req, res) => {
     if (!phoneRegex.test(contactPhone)) {
         return res.status(400).send("Error in request - phone number is invalid.");
     }
-    
+    // create new warehouse object
     const newWarehouse =   {
         "id": uuidv4(),
         name,
@@ -38,8 +38,9 @@ const addWarehouse = (req, res) => {
     warehouseData.push(newWarehouse);
     // write the updated warehouse data back to the json file
     fs.writeFileSync("./data/warehouses.json", JSON.stringify(warehouseData));
-    // send back the newly added warehouse
-    res.status(201).json(newWarehouse);
+    // send back the new warehouse location
+    const newWarehouseURL = `/warehouse/${newWarehouse[0]}`;
+    res.status(201).location(newWarehouseURL).send(newWarehouseURL);
 };
 
 // delete /warehouse => delete warehouse and all its inventory items from data files
@@ -51,12 +52,10 @@ const deleteWarehouse = (req, res) => {
     const inventoryData = JSON.parse(fs.readFileSync("./data/inventories.json"));
     const newWarehouseData = warehouseData.filter((warehouse) => warehouse.id !== warehouseId);
     const newInventoryData = inventoryData.filter((item) => item.warehouseID !== warehouseId);
-    // save deleted warehouse to send back
-    const deletedWarehouse = warehouseData.filter((warehouse) => warehouse.id === warehouseId);
     // write the updated warehouse and inventory data back to the json files
     fs.writeFileSync("./data/warehouses.json", JSON.stringify(newWarehouseData));
     fs.writeFileSync("./data/inventories.json", JSON.stringify(newInventoryData));
-    res.status(200).json(deletedWarehouse);
+    res.status(204).send(`Warehouse with id: ${warehouseId} and all its inventory items have been deleted.`)
 };
 
 module.exports = {
