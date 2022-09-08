@@ -7,8 +7,8 @@ const cors = require("cors");
 require('dotenv').config()
 const {PORT} = process.env || 8080;
 //Import routes
-const warehouseRoutes = require('./routes/warehouse');
-const inventoryRoutes = require('./routes/inventory');
+const warehouseRoutes = require('./routes/warehouseRoute');
+const inventoryRoutes = require('./routes/inventoryRoute');
 
 //Middleware
 app.use(cors())
