@@ -6,7 +6,10 @@ const warehouseController = require("../controllers/warehouseController");
 
 // warehouse routes
 //root endpoint
-router.post("/", warehouseController.addWarehouse);
+router
+    .route("/")
+    .get(warehouseController.index)
+    .post(warehouseController.addWarehouse);
 
 // /:warehouseId endpoint
 router
