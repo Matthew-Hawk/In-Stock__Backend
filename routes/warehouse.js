@@ -47,4 +47,12 @@ router.post("/", (req, res) => {
     res.status(200).json(newWarehouse);
 });
 
+
+// get single warehouse detail
+router.get('/:id', (req, res) => {
+    const warehouseData = JSON.parse(fs.readFileSync("./data/warehouses.json"));
+    let selectedWarehouse = warehouseData.find(warehouse => warehouse.id === req.params.id)
+    res.json(selectedWarehouse)
+})
+
 module.exports = router;
