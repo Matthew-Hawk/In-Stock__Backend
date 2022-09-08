@@ -8,19 +8,16 @@ const addWarehouse = (req, res) => {
     const { name, address, city, country, contactName, contactPosition, contactPhone, contactEmail } = req.body;
     // check that all fields are non-empty
     if (!name || !address || !city || !country || !contactName || !contactPosition || !contactPhone || !contactEmail) {
-        res.status(400).send("Error in request - all fields must be non-empty.");
-        return;
+        return res.status(400).send("Error in request - all fields must be non-empty.");
     }
     // check that phone number and email are correct using regex
     const emailRegex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     if (!emailRegex.test(contactEmail)) {
-        res.status(400).send("Error in request - email is invalid.");
-        return;
+        return res.status(400).send("Error in request - email is invalid.");
     }
     const phoneRegex = /^(\+[0-9])\s(\([0-9]{3}\))\s([0-9]{3}\-[0-9]{4})$/;
     if (!phoneRegex.test(contactPhone)) {
-        res.status(400).send("Error in request - phone number is invalid.");
-        return;
+        return res.status(400).send("Error in request - phone number is invalid.");
     }
     
     const newWarehouse =   {
@@ -42,7 +39,7 @@ const addWarehouse = (req, res) => {
     // write the updated warehouse data back to the json file
     fs.writeFileSync("./data/warehouses.json", JSON.stringify(warehouseData));
     // send back the newly added warehouse
-    res.status(200).json(newWarehouse);
+    res.status(201).json(newWarehouse);
 };
 
 // delete /warehouse => delete warehouse and all its inventory items from data files
