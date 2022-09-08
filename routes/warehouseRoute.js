@@ -5,7 +5,13 @@ const router = express.Router();
 const warehouseController = require("../controllers/warehouseController");
 
 // warehouse routes
+//root endpoint
 router.post("/", warehouseController.addWarehouse);
-router.delete("/:warehouseId", warehouseController.deleteWarehouse);
+
+// /:warehouseId endpoint
+router
+    .route("/:warehouseId")
+    .delete(warehouseController.deleteWarehouse)
+    .get(warehouseController.singleWarehouse);
 
 module.exports = router;

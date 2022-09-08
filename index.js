@@ -19,7 +19,7 @@ app.use(express.static('public')); // to get images as static files
 app.use("/warehouse", warehouseRoutes);
 app.use("/inventory", inventoryRoutes);
 
-app.listen(PORT, () =>{
-    console.log(`Running on port ${PORT}....`)
+app.listen(8080, () =>{
+    // console.log(`Running on port ${PORT}....`)
     console.log('To kill API press CTRL + C')
 })

@@ -58,7 +58,15 @@ const deleteWarehouse = (req, res) => {
     res.status(204).send(`Warehouse with id: ${warehouseId} and all its inventory items have been deleted.`)
 };
 
+// get single warehouse detail
+ const singleWarehouse = (req, res) => {
+    const warehouseData = JSON.parse(fs.readFileSync("./data/warehouses.json"));
+    let selectedWarehouse = warehouseData.find(warehouse => warehouse.id === req.params.warehouseId)
+    res.json(selectedWarehouse)
+}
+
 module.exports = {
     addWarehouse,
-    deleteWarehouse
+    deleteWarehouse,
+    singleWarehouse
 }
