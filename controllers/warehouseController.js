@@ -2,7 +2,6 @@
 const fs = require('fs');
 const { v4: uuidv4 } = require('uuid');
 
-const warehouseData = JSON.parse(fs.readFileSync("./data/warehouses.json"));
 
 // post /warehouses => add new warehouse to warehouses data
 const addWarehouse = (req, res) => {
@@ -36,6 +35,7 @@ const addWarehouse = (req, res) => {
         }
     };
     // get current warehouse data and push new warehouse to existing array
+    const warehouseData = JSON.parse(fs.readFileSync("./data/warehouses.json"));
     warehouseData.push(newWarehouse);
     // write the updated warehouse data back to the json file
     fs.writeFileSync("./data/warehouses.json", JSON.stringify(warehouseData));
@@ -49,6 +49,7 @@ const deleteWarehouse = (req, res) => {
     // get warehouse id from url
     const warehouseId = req.params.warehouseId;
     // remove specified warehouse and corresponding inventory items using warehouse id
+    const warehouseData = JSON.parse(fs.readFileSync("./data/warehouses.json"));
     const inventoryData = JSON.parse(fs.readFileSync("./data/inventories.json"));
     const newWarehouseData = warehouseData.filter((warehouse) => warehouse.id !== warehouseId);
     const newInventoryData = inventoryData.filter((item) => item.warehouseID !== warehouseId);
@@ -60,12 +61,14 @@ const deleteWarehouse = (req, res) => {
 
 // get single warehouse detail
  const singleWarehouse = (req, res) => {
+    const warehouseData = JSON.parse(fs.readFileSync("./data/warehouses.json"));
     let selectedWarehouse = warehouseData.find(warehouse => warehouse.id === req.params.warehouseId)
     res.status(200).json(selectedWarehouse)
 }
 
 // get list of warehouses
 const index = (_req,res) => {
+    const warehouseData = JSON.parse(fs.readFileSync("./data/warehouses.json"));
     res.status(200).json(warehouseData)
 }
 

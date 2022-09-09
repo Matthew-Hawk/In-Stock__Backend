@@ -2,6 +2,7 @@
 const fs = require('fs');
 const { v4: uuidv4 } = require('uuid');
 
+
 // post /inventory => add new inventory item to inventory data
 const addInventoryItem = (req, res) => {
     // get new inventory data from request body and validate data
@@ -34,6 +35,20 @@ const addInventoryItem = (req, res) => {
     res.status(201).location(newInventoryURL).send(newInventoryURL);
 };
 
+//update inventory item details
+const editInventoryItem = (req, res) => {
+    const inventoryData = JSON.parse(fs.readFileSync("./data/inventories.json"));
+    inventoryData.find(inventory => inventory.id === req.params.inventoryId).warehouseName = req.body.warehouseName;
+    inventoryData.find(inventory => inventory.id === req.params.inventoryId).itemName = req.body.itemName;
+    inventoryData.find(inventory => inventory.id === req.params.inventoryId).description = req.body.description;
+    inventoryData.find(inventory => inventory.id === req.params.inventoryId).category = req.body.category;
+    inventoryData.find(inventory => inventory.id === req.params.inventoryId).status = req.body.status;
+    fs.writeFileSync('./data/inventories.json', JSON.stringify(inventoryData))
+    res.status(204).send(`inventory with id ${req.params.inventoryId} was edited`)
+}
+
+
 module.exports = {
-    addInventoryItem
+    addInventoryItem,
+    editInventoryItem,
 }

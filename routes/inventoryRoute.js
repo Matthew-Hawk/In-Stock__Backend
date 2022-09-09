@@ -6,5 +6,6 @@ const inventoryController = require("../controllers/inventoryController");
 
 // inventory routes
 router.post("/", inventoryController.addInventoryItem);
+router.put('/:inventoryId', inventoryController.editInventoryItem)
 
 module.exports = router;
