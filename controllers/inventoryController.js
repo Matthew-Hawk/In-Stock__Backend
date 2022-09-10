@@ -41,11 +41,10 @@ const deleteInventoryItem = (req, res) => {
     const inventoryId = req.params.id;
     // remove specified inventory items using inventory id
     const inventoryData = JSON.parse(fs.readFileSync("./data/inventories.json"));
-    const selectedInventory = inventoryData.find((item) => item.id !== inventoryId);
     // write the updated inventory data back to the json files
     const newInventoryList = inventoryData.filter((item) => item.id !== inventoryId);
     fs.writeFileSync("./data/inventories.json", JSON.stringify(newInventoryList));
-    res.status(204).send(`inventory with id: ${inventoryId} has been deleted.`)
+    res.status(200).json(newInventoryList)
 };
 
 //update inventory item details
