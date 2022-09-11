@@ -72,9 +72,26 @@ const index = (_req,res) => {
     res.status(200).json(warehouseData)
 }
 
+//edit warehouse details
+const editWarehouse = (req, res) => {
+    const warehouseData = JSON.parse(fs.readFileSync("./data/warehouses.json"));
+    console.log(req.body)
+    warehouseData.find(warehouse => warehouse.id === req.params.warehouseId).name = req.body.name;
+    warehouseData.find(warehouse => warehouse.id === req.params.warehouseId).address = req.body.address;
+    warehouseData.find(warehouse => warehouse.id === req.params.warehouseId).city = req.body.city;
+    warehouseData.find(warehouse => warehouse.id === req.params.warehouseId).country = req.body.country;
+    warehouseData.find(warehouse => warehouse.id === req.params.warehouseId).contact.name = req.body.contact.name;
+    warehouseData.find(warehouse => warehouse.id === req.params.warehouseId).contact.position = req.body.contact.position;
+    warehouseData.find(warehouse => warehouse.id === req.params.warehouseId).contact.phone = req.body.contact.phone;
+    warehouseData.find(warehouse => warehouse.id === req.params.warehouseId).contact.email = req.body.contact.email;
+    fs.writeFileSync('./data/warehouses.json', JSON.stringify(warehouseData))
+    res.status(204).send(`warehouse with id ${req.params.warehouseID} was edited`)
+}
+
 module.exports = {
     addWarehouse,
     deleteWarehouse,
     singleWarehouse,
-    index
+    index,
+    editWarehouse
 }
