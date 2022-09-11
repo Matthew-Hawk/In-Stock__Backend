@@ -39,14 +39,14 @@ const addInventoryItem = (req, res) => {
 // get single inventory detail
 const singleInventoryItem = (req, res) => {
     const inventoryData = JSON.parse(fs.readFileSync("./data/inventories.json"));
-    let selectedInventory = inventoryData.find(inventories => inventories.id === req.params.id)
+    let selectedInventory = inventoryData.find(inventories => inventories.id === req.params.inventoryId)
     res.status(200).json(selectedInventory)
 }
 
 // delete /inventory id => delete inventory items from data files
 const deleteInventoryItem = (req, res) => {
     // get inventory id from url
-    const inventoryId = req.params.id;
+    const inventoryId = req.params.inventoryId;
     // remove specified inventory items using inventory id
     const inventoryData = JSON.parse(fs.readFileSync("./data/inventories.json"));
     // write the updated inventory data back to the json files
