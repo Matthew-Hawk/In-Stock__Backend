@@ -14,4 +14,9 @@ router
 .delete(inventoryController.deleteInventoryItem)
 .put(inventoryController.editInventoryItem);
 
+// /warehouse/:warehosueId
+router
+.route("/warehouse/:warehouseId")
+.get(inventoryController.warehouseInventory)
+
 module.exports = router;
