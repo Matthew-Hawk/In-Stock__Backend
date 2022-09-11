@@ -35,6 +35,13 @@ const addInventoryItem = (req, res) => {
     res.status(201).location(newInventoryURL).send(newInventoryURL);
 };
 
+// get single inventory detail
+const singleInventoryItem = (req, res) => {
+    const inventoryData = JSON.parse(fs.readFileSync("./data/inventories.json"));
+    let selectedInventory = inventoryData.find(inventories => inventories.id === req.params.inventoryId)
+    res.status(200).json(selectedInventory)
+}
+
 //update inventory item details
 const editInventoryItem = (req, res) => {
     const inventoryData = JSON.parse(fs.readFileSync("./data/inventories.json"));
@@ -51,4 +58,5 @@ const editInventoryItem = (req, res) => {
 module.exports = {
     addInventoryItem,
     editInventoryItem,
+    singleInventoryItem, 
 }

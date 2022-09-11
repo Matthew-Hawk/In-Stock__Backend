@@ -8,4 +8,10 @@ const inventoryController = require("../controllers/inventoryController");
 router.post("/", inventoryController.addInventoryItem);
 router.put('/:inventoryId', inventoryController.editInventoryItem)
 
+// /:inventoryId endpoint
+router
+.get(inventoryController.singleInventoryItem);
+
+
+
 module.exports = router;
