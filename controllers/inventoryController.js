@@ -35,12 +35,26 @@ const addInventoryItem = (req, res) => {
     res.status(201).location(newInventoryURL).send(newInventoryURL);
 };
 
+
 // get single inventory detail
 const singleInventoryItem = (req, res) => {
     const inventoryData = JSON.parse(fs.readFileSync("./data/inventories.json"));
     let selectedInventory = inventoryData.find(inventories => inventories.id === req.params.id)
     res.status(200).json(selectedInventory)
 }
+
+// delete /inventory id => delete inventory items from data files
+const deleteInventoryItem = (req, res) => {
+    // get inventory id from url
+    const inventoryId = req.params.id;
+    // remove specified inventory items using inventory id
+    const inventoryData = JSON.parse(fs.readFileSync("./data/inventories.json"));
+    // write the updated inventory data back to the json files
+    const newInventoryList = inventoryData.filter((item) => item.id !== inventoryId);
+    fs.writeFileSync("./data/inventories.json", JSON.stringify(newInventoryList));
+    res.status(200).json(newInventoryList)
+};
+
 
 //update inventory item details
 const editInventoryItem = (req, res) => {
@@ -59,4 +73,5 @@ module.exports = {
     addInventoryItem,
     editInventoryItem,
     singleInventoryItem, 
+    deleteInventoryItem,
 }
