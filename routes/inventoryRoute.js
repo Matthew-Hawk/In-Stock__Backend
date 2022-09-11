@@ -5,7 +5,10 @@ const router = express.Router();
 const inventoryController = require("../controllers/inventoryController");
 
 // inventory routes
-router.post("/", inventoryController.addInventoryItem);
+router
+.route("/")
+.get(inventoryController.index)
+.post(inventoryController.addInventoryItem);
 
 // /:inventoryId endpoint
 router
