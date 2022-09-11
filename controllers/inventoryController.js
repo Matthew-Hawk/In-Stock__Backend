@@ -68,6 +68,7 @@ const editInventoryItem = (req, res) => {
     res.status(204).send(`inventory with id ${req.params.inventoryId} was edited`)
 }
 
+
 //get inventories for a given warehouse
 const warehouseInventory = (req, res) => {
     const inventoryData = JSON.parse(fs.readFileSync("./data/inventories.json"));
@@ -77,10 +78,19 @@ const warehouseInventory = (req, res) => {
 }
 
 
+
+//get list of all inventory items
+const index = (_req,res) => {
+    const inventoryData = JSON.parse(fs.readFileSync("./data/inventories.json"));
+    res.status(200).json(inventoryData)
+}
+
 module.exports = {
     addInventoryItem,
     editInventoryItem,
     singleInventoryItem, 
     deleteInventoryItem,
-    warehouseInventory
+    warehouseInventory,
+    index
+
 }
