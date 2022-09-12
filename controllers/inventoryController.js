@@ -8,7 +8,7 @@ const addInventoryItem = (req, res) => {
     // get new inventory data from request body and validate data
     const { itemName, description, category, status, quantity, warehouseName } = req.body;
     // check that all fields are non-empty
-    if (!itemName || !description || !category || !status || !quantity || !warehouseName) {
+    if (!itemName || !description || !category || !status || !warehouseName || (status==="In Stock" && !quantity)) {
         return res.status(400).send("Error in request - all fields must be non-empty.");
     }
     // find warehouse id from warehouse name in the warehouse json file
