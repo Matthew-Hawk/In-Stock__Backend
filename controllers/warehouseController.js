@@ -2,7 +2,6 @@
 const fs = require('fs');
 const { v4: uuidv4 } = require('uuid');
 
-
 // post /warehouses => add new warehouse to warehouses data
 const addWarehouse = (req, res) => {
     // get new warehouse data from request body and validate data
@@ -75,7 +74,6 @@ const index = (_req,res) => {
 //edit warehouse details
 const editWarehouse = (req, res) => {
     const warehouseData = JSON.parse(fs.readFileSync("./data/warehouses.json"));
-    console.log(req.body)
     warehouseData.find(warehouse => warehouse.id === req.params.warehouseId).name = req.body.name;
     warehouseData.find(warehouse => warehouse.id === req.params.warehouseId).address = req.body.address;
     warehouseData.find(warehouse => warehouse.id === req.params.warehouseId).city = req.body.city;
