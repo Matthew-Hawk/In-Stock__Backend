@@ -1,6 +1,6 @@
 // imports
 const fs = require('fs');
-const { v4: uuidv4 } = require('uuid');
+const { v4: uuid } = require('uuid');
 
 // post /warehouses => add new warehouse to warehouses data
 const addWarehouse = (req, res) => {
