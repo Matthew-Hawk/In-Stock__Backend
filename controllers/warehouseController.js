@@ -1,47 +1,36 @@
 // imports
 const fs = require('fs');
-const { v4: uuidv4 } = require('uuid');
+const { v4: uuid } = require('uuid');
 
 // post /warehouses => add new warehouse to warehouses data
 const addWarehouse = (req, res) => {
-    // get new warehouse data from request body and validate data
-    const { name, address, city, country, contactName, contactPosition, contactPhone, contactEmail } = req.body;
-    // check that all fields are non-empty
-    if (!name || !address || !city || !country || !contactName || !contactPosition || !contactPhone || !contactEmail) {
-        return res.status(400).send("Error in request - all fields must be non-empty.");
-    }
-    // check that phone number and email are correct using regex
-    const emailRegex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-    if (!emailRegex.test(contactEmail)) {
-        return res.status(400).send("Error in request - email is invalid.");
-    }
-    const phoneRegex = /^(\+[0-9])\s(\([0-9]{3}\))\s([0-9]{3}\-[0-9]{4})$/;
-    if (!phoneRegex.test(contactPhone)) {
-        return res.status(400).send("Error in request - phone number is invalid.");
-    }
+
     // create new warehouse object
-    const newWarehouse =   {
-        "id": uuidv4(),
-        name,
-        address,
-        city,
-        country,
-        "contact": {
-            contactName,
-            contactPosition,
-            contactPhone,
-            contactEmail
-        }
-    };
+    const newWarehouse = {
+        id: uuid(),
+        name: req.body.newWarehouse.warehouseName,
+        address: req.body.newWarehouse.address,
+        city: req.body.newWarehouse.city,
+        country: req.body.newWarehouse.country,
+        contact: {
+          name: req.body.newWarehouse.contact.contactName,
+          position: req.body.newWarehouse.contact.position,
+          phone: req.body.newWarehouse.contact.phone,
+          email: req.body.newWarehouse.contact.email,
+        },
+      };
+
     // get current warehouse data and push new warehouse to existing array
     const warehouseData = JSON.parse(fs.readFileSync("./data/warehouses.json"));
     warehouseData.push(newWarehouse);
     // write the updated warehouse data back to the json file
     fs.writeFileSync("./data/warehouses.json", JSON.stringify(warehouseData));
     // send back the new warehouse location
-    const newWarehouseURL = `/warehouse/${newWarehouse[0]}`;
-    res.status(201).location(newWarehouseURL).send(newWarehouseURL);
+    // const newWarehouseURL = `/warehouse/${newWarehouse[0]}`;
+    res.status(201).json({message: 'success'});
 };
+
+
 
 // delete /warehouse => delete warehouse and all its inventory items from data files
 const deleteWarehouse = (req, res) => {
